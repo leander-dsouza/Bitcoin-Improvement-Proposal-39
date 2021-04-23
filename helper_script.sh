@@ -21,7 +21,7 @@ usage: ./helper_script.sh [option] ... [-b build | -c clean | -h help | -]\n
 Options and arguments (and corresponding command description):
 -h     : print this help message and exit
 -b     : Builds the 'trezor-firmware' crypto folder and outputs the binary in src/main
--c     : Cleans all object and residual binary files
+-c     : Cleans all objects and residual binary files
 "
 
 
@@ -40,7 +40,7 @@ while getopts "hbc" opt
 
 			sed -i "s|${KEY}|$PWD|g" custom_makefile
 
-			cd ${REPOSITORY_PATH}/crypto && cp -r ${CURRENT_PATH}/custom_makefile . && make -f custom_makefile
+			cd ${REPOSITORY_PATH}/crypto && mkdir lib && cp -r ${CURRENT_PATH}/custom_makefile . && make -f custom_makefile
 			cd ${CURRENT_PATH} && sed -i "s|$PWD|${KEY}|g" custom_makefile
 
             exit 0 ;;
@@ -51,7 +51,7 @@ while getopts "hbc" opt
 			printf "\n%b" ${white}
 
 			cd ${REPOSITORY_PATH}/crypto
-			make clean -f custom_makefile && rm -r custom_makefile
+			make clean -f custom_makefile && rm -r custom_makefile lib/
 			exit 0 ;;
      esac
 done
